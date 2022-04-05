@@ -36,11 +36,33 @@
                </div>
         </div>  
        <style>
+.image-container
+{
+  padding:20px;
+  margin-top:5px;
+  margin-bottom:5px;
+  margin-left:5px;
+  margin-right: 5px;
+  display :flex;
+  justify-content:centre;
+}
+.image-container img{
+  margin-left:5px;
+  margin-right:5px;
+  height:240px;
+  
+}
           /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {
   float: left;
   width: 25%;
-  padding: 5px;
+  height:240px;
+  padding:15px;
+  max-height:240px ;
+  margin-bottom: 5%;
+  text-align: center;
+
+
 }
 
 /* Clear floats after image containers */
@@ -48,22 +70,23 @@
   content: "";
   clear: both;
   display: table;
+  margin-right:5% ;
 } 
        </style> 
        
     </head>
     <body>
+      <div class="image-container">
       <div class="row">
         <div class="column">
           <img src="/images/Trivandrum.jpg" alt="Snow" style="width:100%">
           <a href="#">Thiruvanathapuram</a>
-          <p>
-            </p>
+          
         </div>
         <div class="column">
           <img src="/images/kollam.webp" alt="Forest" style="width:100%">
           <a href="#">Kollam</a>
-          <p></p>
+         
         </div>
         <div class="column">
           <img src="/images/alappuzha.jpg" alt="Mountains" style="width:100%">
@@ -126,6 +149,9 @@
             <p>
               </p>
           </div>
+          <div class="column">
+            
+          </div>
 
           <div class="column">
             <img src="/images/Angel fort.webp" alt="Mountains" style="width:100%">
@@ -139,5 +165,6 @@
             <p>
               </p>
           </div>
+        </div>
       </div> 
     </body>
