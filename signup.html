@@ -2,10 +2,9 @@
 <html>
     <head>
       <title>SignUp</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+      
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
       <link rel="stylesheet" href="css/style.css">
       
       
@@ -85,11 +84,20 @@ button:hover {
   float: left;
   width: 50%;
 }
+.error
+{
+  color: red;
+  size: 80%
+}
+.hidden
+{
+  display:none
+}
 
 /* Add padding to container elements */
 .container {
   padding: 16px;
-  background-color: burlywood;
+  background-color: rgba(214, 247, 241, 0.966);
 }
 
 /* Clear floats */
@@ -107,23 +115,32 @@ button:hover {
 }
 </style>
 </head>
-<body style="background-color:powderblue;">
+<body style="background-color:powderblue;" onload='document.form.email.focus()'>
 
-<form action="/action_page.php" style="border:1px solid black;margin: auto; width: 540px;">
+<form action="login.html" name="form" style="border:1px solid black;margin: auto; width: 540px;" id="formvalidate">
   <div class="container">
     <h1>Sign Up</h1>
     <p>Please fill in this form to create an account.</p>
     <hr>
 
-    <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Enter Email" name="email" required>
+    <label for="email"><b>Email:</b></label>
+    <input type="text" placeholder="Enter Email" id="email" name="email" required>
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+    <label for="psw" ><b>Password:</b></label>
+    <input type="password"  id="psw" placeholder="Enter Password"  name="psw" onkeyup=" return passwordChanged();" required>
+    <span id="strength" >Password must contain minimum 8 characters , 1 uuper case,1 lower case and a number.</span>
+    <br>
+    <br>
 
-    <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    <label for="psw-repeat" ><b>Repeat Password:</b></label>
+    <input type="password" placeholder="Repeat Password" id="psw-repeat" required>
     
+    <div>
+   <label for="myform_phone"></label><b> Phone Number:</b> </label></label>
+  <input type="text" id="myform_phone" name="phone" placeholder="Enter Phone number">
+  <span id="error" >Accepted formats:XXX-XXX-XXXX,XXX.XXX.XXXX,XXX XXX XXXX </span>
+  </div>
+   <br>
     <label>
       <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
     </label>
@@ -131,11 +148,119 @@ button:hover {
     <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
 
     <div class="clearfix">
-      <button type="button" class="cancelbtn">Cancel</button>
-      <button type="submit" class="signupbtn">Sign Up</button>
+      <button type="button" class="cancelbtn" >Cancel</button>
+      <button type="submit" class="signupbtn" >Sign Up</button>
     </div>
   </div>
 </form>
+<script >
+
+const form=document.getElementById("formvalidate");
+form.addEventListener('submit',function(event){
+  console.log(form);
+ 
+                                                if(!validateForm()){event.preventDefault();}
+                                              }
+                      )
+ 
+function validateForm()
+{
+  //reads the form variables and declare patterns
+let passw= /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+let phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
+let inputtxt=document.getElementById("psw").value;
+let email=document.getElementById("email").value;
+let pswrepeat=document.getElementById("psw-repeat").value;
+let phonenumb=document.getElementById("myform_phone").value;
+
+let check1=false;
+let check2=false;
+let check3=false;
+let check4=false;
+
+console.log(email);
+console.log(inputtxt);
+console.log(pswrepeat);
+console.log(phonenumb);
+//if all mandatory fields are entered
+if(email==""||inputtxt==""||pswrepeat==""||phonenumb==""){
+    alert("Mandatory fields cannot be empty");
+   }
+else{ 
+  //check1:check for mail format
+            if(email.match(mailformat)){
+                                         document.form.psw.focus();
+                                         check1=true;
+                                        
+                           
+                                       }
+                                       else{alert("Please Enter a valid email Id")}
+  //check2:check for password and repeat password match  
+           if(inputtxt==pswrepeat){ 
+                                       check2=true;
+                                      }
+                  else{ alert("Password and repeat password do not Match!!"); }
+
+   //check3:check for password format                               
+           if(inputtxt.match(passw)){ 
+             
+
+                                      check3=true;
+                                    
+                                    
+                                    }
+              else{ 
+                   alert('Password must be minimum 8 characters , conatian 1 uuper case,1 lower case and a number');
+
+                  }
+   
+    //check4:check for phone number format
+    
+          if(phonenumb.match(phoneno)) {
+                                      
+                                      check4=true;
+                                  
+                                     
+                                     }
+          else{
+                        alert("Not a valid Phone Number");
+           
+               }                           
+                
+           
+               
+   }
+  
+  if(check1==true&&check2==true&&check3==true&&check4==true){
+                
+                  return true; } 
+       else {return false;}   
+  
+ }//function Validateform  ends
+
+
+ function passwordChanged() {
+        var strength = document.getElementById('strength');
+        var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+        var mediumRegex = new RegExp("^(?=.{8,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+        var enoughRegex = new RegExp("(?=.{8,}).*", "g");
+        var pwd = document.getElementById("psw");
+        if (pwd.value.length == 0) {
+            strength.innerHTML = 'Type Password';
+        } else if (false == enoughRegex.test(pwd.value)) {
+            strength.innerHTML = 'Type More characters';
+        } else if (strongRegex.test(pwd.value)) {
+            strength.innerHTML = '<span style="color:green"><b>Password Strength:Strong!</b></span>';
+        } else if (mediumRegex.test(pwd.value)) {
+            strength.innerHTML = '<span style="color:orange"><b>Password Strength:Medium!</b></span>';
+        } else {
+            strength.innerHTML = '<span style="color:red"><b>Password Strength:Weak!</b></span>';
+        }
+    }
+    
+</script>
 
 </body>
 </html>
